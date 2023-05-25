@@ -1,8 +1,10 @@
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <title>QRリーダー(プロトタイプ)</title>
   <script src="./jsQR.js"></script>
+  <script src="./sql.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
   <link href="./style.css" rel="stylesheet">
 </head>
@@ -14,7 +16,7 @@
   <canvas id="canvas" hidden></canvas>
   <div id="output" hidden>
     <div id="outputMessage">QRコードをかざしてください。</div>
-    <div hidden><b>Data:</b> <span id="outputData"></span></div>
+    <div hidden><span id="outputDate">Data:</span>&emsp; <span id="outputData"></span></div>
   </div>
   <script>
     var video = document.createElement("video");
@@ -25,12 +27,15 @@
     var outputMessage = document.getElementById("outputMessage");
     var outputData = document.getElementById("outputData");
     var previousData = "";
-    var dataList[];
 
     function saveData(codeData) {
       if (previousData != codeData) {
-        dataList.append(codeData);
-	previousData = codeData;
+        var date = new Date();
+        var now = date.toLocaleString();
+        outputDate.innerText = now;
+        addQueue(codeData);
+        previousData = codeData;
+        console.log(now + " ： " +codeData)
       }
       return codeData;
     }
@@ -74,8 +79,9 @@
           outputMessage.hidden = true;
           outputData.parentElement.hidden = false;
 
-	  // 取得したデータを保存
-          saveData(code.data);
+          // 取得したデータを保存
+          outputData.innerText = saveData(code.data);
+          
 
         } else {
           outputMessage.hidden = false;
