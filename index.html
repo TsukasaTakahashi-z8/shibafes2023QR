@@ -4,62 +4,16 @@
   <title>QRリーダー(プロトタイプ)</title>
   <script src="./jsQR.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Ropa Sans', sans-serif;
-      color: #333;
-      max-width: 640px;
-      margin: 0 auto;
-      position: relative;
-    }
-
-    #githubLink {
-      position: absolute;
-      right: 0;
-      top: 12px;
-      color: #2D99FF;
-    }
-
-    h1 {
-      margin: 10px 0;
-      font-size: 40px;
-    }
-
-    #loadingMessage {
-      text-align: center;
-      padding: 40px;
-      background-color: #eee;
-    }
-
-    #canvas {
-      width: 100%;
-    }
-
-    #output {
-      margin-top: 20px;
-      background: #eee;
-      padding: 10px;
-      padding-bottom: 0;
-    }
-
-    #output div {
-      padding-bottom: 10px;
-      word-wrap: break-word;
-    }
-
-    #noQRFound {
-      text-align: center;
-    }
-  </style>
+  <link href="./style.css" rel="stylesheet">
 </head>
 <body>
-  <h1>jsQR Demo</h1>
-  <a id="githubLink" href="https://github.com/cozmo/jsQR">View documentation on Github</a>
-  <p>Pure JavaScript QR code decoding library.</p>
-  <div id="loadingMessage">🎥 Unable to access video stream (please make sure you have a webcam enabled)</div>
+  <h1>来場者統計システム</h1>
+  <a id="githubLink" href="https://github.com/TsukasaTakahashi-z8/shibafes2023QR">Source Code on Github</a>
+
+  <div id="loadingMessage">🎥 カメラのアクセスが許可されていません。<br> (このサイトのカメラへのアクセスを許可してください。)</div>
   <canvas id="canvas" hidden></canvas>
   <div id="output" hidden>
-    <div id="outputMessage">No QR code detected.</div>
+    <div id="outputMessage">QRコードをかざしてください。</div>
     <div hidden><b>Data:</b> <span id="outputData"></span></div>
   </div>
   <script>
@@ -120,8 +74,8 @@
           outputMessage.hidden = true;
           outputData.parentElement.hidden = false;
 
-	  // 取得したデータをtxtに保存
-          saveData(code.data)
+	  // 取得したデータを保存
+          saveData(code.data);
 
         } else {
           outputMessage.hidden = false;
