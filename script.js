@@ -6,19 +6,6 @@ var outputContainer = document.getElementById("output");
 var outputMessage = document.getElementById("outputMessage");
 var outputData = document.getElementById("outputData");
 var outputElement = document.getElementById("output")
-var previousData = "";
-
-function saveData(codeData) {
-    if (previousData != codeData) {
-        var date = new Date();
-        var now = date.toLocaleString();
-        outputData.innerText = now;
-        addQueue(codeData);
-        previousData = codeData;
-        console.log(now + " ： " + codeData)
-    }
-    return codeData;
-}
 
 function drawLine(begin, end, color) {
     canvas.beginPath();
@@ -52,16 +39,10 @@ function tick() {
             inversionAttempts: "dontInvert",
         });
         if (code) {
-            drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-            drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-            drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-            drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
             outputMessage.hidden = true;
-            outputData.parentElement.hidden = false;
-
-            // 取得したデータを保存
-            outputData.innerText = saveData(code.data);
-
+            if (code.data.substr(0, 53) == "https://shibafufes68th.main.jp/vote/voteform.php?uid=") {
+                window.location.href = "./index.html?k=" + "a";
+            }
         } else {
             outputMessage.hidden = false;
             outputData.parentElement.hidden = true;
